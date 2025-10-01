@@ -25,6 +25,14 @@ const { getPreset, getPresets, savePreset, deletePresets } = require('./Preset')
 const { File } = require('~/db/models');
 
 const seedDatabase = async () => {
+  const DB_MODE = process.env.DB_MODE || 'mongodb';
+
+  // Skip MongoDB seeding in Supabase mode
+  if (DB_MODE === 'supabase') {
+    console.log('🔵 [Supabase Mode] Skipping MongoDB seed operations');
+    return;
+  }
+
   await methods.initializeRoles();
   await methods.seedDefaultRoles();
   await methods.ensureDefaultCategories();
