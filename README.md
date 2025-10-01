@@ -1,331 +1,387 @@
-# 🚀 Libre-X - AI Comparison & Scoring Platform
+# 🚀 Libre-X
 
-> **Migration Supabase Complétée** - Version PostgreSQL moderne
+**An AI Model Comparison & Scoring Platform**
 
-[![Supabase](https://img.shields.io/badge/Database-Supabase-green.svg)](https://supabase.com)
-[![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-blue.svg)](https://www.postgresql.org/)
-[![React](https://img.shields.io/badge/Frontend-React-blue.svg)](https://reactjs.org/)
-[![Node.js](https://img.shields.io/badge/Backend-Node.js-green.svg)](https://nodejs.org/)
-[![Migration](https://img.shields.io/badge/Migration-95%25_Complete-orange.svg)](#)
+Compare responses from multiple AI models side-by-side and generate automated quality scores. Built on Supabase PostgreSQL with modern authentication and real-time capabilities.
 
----
-
-## ⚡ Démarrage Ultra-Rapide
-
-### 1️⃣ Exécuter les Migrations SQL (15 min) ⚠️
-
-**ÉTAPE CRITIQUE** - Sans cela, l'app ne démarrera pas !
-
-1. Ouvrir: https://app.supabase.com/project/lcsidczjexcfxajuoaiw/sql/new
-2. Copier/coller `supabase/migrations/001_initial_schema.sql` → Run
-3. Copier/coller `supabase/migrations/002_rls_policies.sql` → Run
-
-### 2️⃣ Démarrer l'App
-
-```bash
-# Backend
-npm run server
-
-# Frontend (autre terminal)
-cd client && npm run dev
-
-# Ouvrir http://localhost:3080
-```
-
-**📚 Guide complet:** [START_HERE.md](./START_HERE.md)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Database](https://img.shields.io/badge/database-Supabase-green.svg)](https://supabase.com)
+[![Node.js](https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen)](https://nodejs.org/)
 
 ---
 
-## 🎯 Qu'est-ce que Libre-X ?
+## 🎯 What is Libre-X?
 
-Plateforme SaaS pour **comparer les réponses d'IA** et **générer des scores** automatiques.
+Libre-X is a SaaS platform that enables you to:
 
-### Fonctionnalités
+- **Compare AI Models**: Run the same prompt across GPT-4, Claude, Gemini, and other models simultaneously
+- **Score Responses**: Automatically evaluate responses using customizable scoring templates
+- **Track Performance**: Benchmark models with aggregated statistics and leaderboards
+- **Collaborate**: Share comparison sessions and scoring templates with teams
+- **Analyze**: View detailed metrics on response quality, latency, and cost
 
-- ✅ Comparaison multi-modèles (GPT-4, Claude, Gemini, etc.)
-- ✅ Scoring automatique avec templates personnalisables
-- ✅ Benchmarking de modèles
-- ✅ Authentification complète (Email + OAuth)
-- ✅ Dashboard utilisateur avec statistiques
-- ✅ Row Level Security (données isolées par utilisateur)
-- ✅ Realtime updates (WebSocket)
+Perfect for:
+- AI researchers evaluating model performance
+- Product teams choosing the right AI for their use case
+- Developers comparing model outputs
+- Organizations requiring AI quality assurance
 
 ---
 
-## 📊 Migration MongoDB → Supabase
+## ✨ Features
 
-### ✅ Complété (95%)
+### Core Functionality
+- ✅ Multi-model comparison (GPT-4, Claude, Gemini, Llama, and more)
+- ✅ Customizable scoring templates with weighted criteria
+- ✅ Real-time response streaming
+- ✅ Model benchmarking and leaderboards
+- ✅ Session history and replay
 
-- [x] 9 tables PostgreSQL avec RLS
-- [x] Auth backend Supabase (11 endpoints)
-- [x] 24 routes migrées automatiquement
-- [x] Frontend TypeScript client
-- [x] Package @supabase/supabase-js installé
-- [x] Configuration créée (.env)
-- [x] Documentation complète (9 guides)
+### Authentication & Security
+- ✅ Email/password authentication
+- ✅ OAuth providers (Google, GitHub, Discord)
+- ✅ Row Level Security (RLS) for data isolation
+- ✅ JWT token-based API authentication
+- ✅ Role-based access control (RBAC)
 
-### ⚠️ Action Utilisateur Requise (5%)
+### User Experience
+- ✅ Modern React interface
+- ✅ Real-time updates via WebSocket
+- ✅ Responsive design (mobile & desktop)
+- ✅ Usage tracking and analytics
+- ✅ File attachments support
 
-- [ ] Exécuter 2 migrations SQL (15 min)
-- [ ] Tester signup/login
+---
 
-### 📈 Bénéfices
+## 🚀 Quick Start
 
-- **-36% code auth** (1020 → 650 lignes)
-- **+Dashboard admin** Supabase inclus
-- **+OAuth automatique** (Google, GitHub, Discord)
-- **+Realtime WebSocket** inclus
-- **+RLS natif** (sécurité auto)
+### Prerequisites
+
+- **Node.js** 20.x or higher
+- **npm** or **yarn**
+- A **Supabase** account (free tier available at [supabase.com](https://supabase.com))
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/Libre-X.git
+   cd Libre-X
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up Supabase**
+
+   Create a new project at [supabase.com](https://supabase.com), then run the SQL migrations:
+
+   - Go to your Supabase project → SQL Editor
+   - Execute `supabase/migrations/001_initial_schema.sql`
+   - Execute `supabase/migrations/002_rls_policies.sql`
+
+4. **Configure environment variables**
+
+   The `.env` file should already be configured. Update these values with your Supabase credentials:
+
+   ```bash
+   # Backend (.env)
+   DB_MODE=supabase
+   SUPABASE_URL=your-project-url.supabase.co
+   SUPABASE_SERVICE_KEY=your-service-role-key
+   ```
+
+   ```bash
+   # Frontend (client/.env.local)
+   VITE_SUPABASE_URL=your-project-url.supabase.co
+   VITE_SUPABASE_ANON_KEY=your-anon-key
+   ```
+
+5. **Start the application**
+   ```bash
+   # Terminal 1 - Backend
+   npm run server
+
+   # Terminal 2 - Frontend
+   cd client
+   npm run dev
+   ```
+
+6. **Open your browser**
+
+   Navigate to [http://localhost:3080](http://localhost:3080)
 
 ---
 
 ## 🏗️ Architecture
 
 ```
-┌─ SUPABASE CLOUD ──────────────┐
-│  PostgreSQL (9 tables)        │
-│  Auth (Email + OAuth)         │
-│  Realtime (WebSocket)         │
-└───────────────────────────────┘
-              ▲
-              │ API (JWT Auth)
-              │
-┌─ LIBRE-X APP ─────────────────┐
-│  Backend (Express + Node.js)  │
-│  - Supabase Auth Routes       │
-│  - User & Session Models      │
-│  - Protected Routes (24)      │
-│                               │
-│  Frontend (React + TypeScript)│
-│  - Supabase Client            │
-│  - Auth Components            │
-│  - Realtime Hooks             │
-└───────────────────────────────┘
-```
-
----
-
-## 🚀 Installation
-
-### Prérequis
-
-- Node.js 20+
-- npm ou yarn
-- Compte Supabase (gratuit)
-
-### Setup
-
-```bash
-# 1. Clone
-git clone <repo-url>
-cd Libre-X
-
-# 2. Install
-npm install
-
-# 3. Configure (déjà fait ✅)
-# Fichiers .env et client/.env.local déjà créés
-
-# 4. Migrations SQL ⚠️
-# Voir étape 1 du Démarrage Ultra-Rapide
-
-# 5. Start
-npm run server    # Backend
-cd client && npm run dev  # Frontend
+┌─────────────────────────────────────┐
+│         SUPABASE CLOUD              │
+│  • PostgreSQL Database (9 tables)   │
+│  • Authentication (Email + OAuth)   │
+│  • Real-time WebSocket              │
+│  • Row Level Security               │
+└─────────────────────────────────────┘
+                ▲
+                │ REST API + WebSocket
+                │
+┌─────────────────────────────────────┐
+│         LIBRE-X APPLICATION         │
+│                                     │
+│  Backend (Node.js + Express)        │
+│  • API Routes (24 protected)        │
+│  • Authentication Controllers       │
+│  • Database Models & Adapters       │
+│  • WebSocket Server                 │
+│                                     │
+│  Frontend (React + TypeScript)      │
+│  • Comparison Interface             │
+│  • Scoring Dashboard                │
+│  • User Management                  │
+│  • Real-time Updates                │
+└─────────────────────────────────────┘
 ```
 
 ---
 
 ## 📚 Documentation
 
-### Guides de Démarrage
+### For Users
+- **[START_HERE.md](START_HERE.md)** - Complete setup guide
+- **[OBTENIR_CLI_TOKEN.md](OBTENIR_CLI_TOKEN.md)** - How to get Supabase CLI token
 
-- **[START_HERE.md](./START_HERE.md)** ⭐ Commencez ici !
-- **[QUICK_START.md](./QUICK_START.md)** Guide rapide en 3 étapes
-- **[MIGRATION_COMPLETE.md](./MIGRATION_COMPLETE.md)** Résumé complet
-
-### Documentation Technique
-
-- **[SUPABASE_INTEGRATION_GUIDE.md](./SUPABASE_INTEGRATION_GUIDE.md)** Guide technique détaillé
-- **[FICHIERS_CREES.md](./FICHIERS_CREES.md)** Liste de tous les fichiers créés
-- **[SYNTHESE_FINALE.md](./SYNTHESE_FINALE.md)** Synthèse finale de la migration
-
-### Migrations SQL
-
-- **[supabase/README.md](./supabase/README.md)** Instructions SQL
-- **[supabase/migrations/](./supabase/migrations/)** Fichiers SQL
+### For Developers
+- **[RAPPORT_MIGRATION_COMPLETE.md](RAPPORT_MIGRATION_COMPLETE.md)** - Technical migration report
+- **API Documentation** - See `/api/server/routes/` for endpoint definitions
+- **Database Schema** - See `supabase/migrations/` for table structures
 
 ---
 
-## 🔐 Authentification
+## 🗄️ Database Schema
 
-### Endpoints Disponibles
-
-```javascript
-POST /api/auth/register           // Inscription
-POST /api/auth/login              // Connexion
-POST /api/auth/logout             // Déconnexion
-POST /api/auth/refresh            // Refresh token
-POST /api/auth/requestPasswordReset // Demande reset
-POST /api/auth/resetPassword      // Reset password
-GET  /api/auth/verify             // Vérification email
-GET  /api/auth/user               // User actuel
-GET  /api/auth/google             // OAuth Google
-GET  /api/auth/github             // OAuth GitHub
-GET  /api/auth/discord            // OAuth Discord
-```
-
-### Exemple Frontend
-
-```typescript
-import { supabase, signIn } from '~/lib/supabase';
-
-// Login
-const { data, error } = await signIn({
-  email: 'user@example.com',
-  password: 'password123'
-});
-
-// OAuth
-await signInWithProvider('google');
-```
-
----
-
-## 🧪 Tests
-
-### Backend
-
-```bash
-# Test signup
-curl -X POST http://localhost:3080/api/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{"email":"test@test.com","password":"pass123","name":"Test User"}'
-
-# Test login
-curl -X POST http://localhost:3080/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email":"test@test.com","password":"pass123"}'
-```
-
-### Frontend
-
-1. Ouvrir http://localhost:3080/register
-2. Créer un compte
-3. Se connecter
-4. Créer une session de comparaison
-5. Vérifier dans Supabase Dashboard
-
----
-
-## 🗄️ Base de Données
-
-### Tables Créées
+### Core Tables
 
 | Table | Description |
 |-------|-------------|
-| `profiles` | Profils utilisateurs |
-| `comparison_sessions` | Sessions de comparaison AI |
-| `scoring_templates` | Templates de scoring |
-| `model_benchmarks` | Benchmarks de modèles |
-| `files` | Fichiers attachés |
-| `transactions` | Transactions utilisateur |
-| `roles`, `groups` | Gestion permissions |
+| `profiles` | User profiles extending Supabase auth.users |
+| `comparison_sessions` | AI model comparison sessions |
+| `scoring_templates` | Customizable scoring criteria |
+| `model_benchmarks` | Aggregated model performance stats |
+| `files` | Uploaded file attachments |
+| `transactions` | User credit/billing history |
+| `roles` | RBAC role definitions |
+| `groups` | Team/organization groups |
+| `group_members` | Group membership relations |
 
-### Dashboard Supabase
+All tables include Row Level Security (RLS) policies to ensure data isolation.
 
-- **Tables:** https://app.supabase.com/project/lcsidczjexcfxajuoaiw/editor
-- **Auth:** https://app.supabase.com/project/lcsidczjexcfxajuoaiw/auth/users
-- **SQL:** https://app.supabase.com/project/lcsidczjexcfxajuoaiw/sql/new
+---
+
+## 🔐 API Authentication
+
+### Available Endpoints
+
+```
+POST   /api/auth/register        Register new user
+POST   /api/auth/login           Login with email/password
+POST   /api/auth/logout          Logout current session
+POST   /api/auth/refresh         Refresh JWT token
+POST   /api/auth/reset-password  Request password reset
+GET    /api/auth/verify          Verify email address
+GET    /api/auth/google          OAuth via Google
+GET    /api/auth/github          OAuth via GitHub
+GET    /api/auth/discord         OAuth via Discord
+```
+
+### Example Usage
+
+```javascript
+// Register
+const response = await fetch('/api/auth/register', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    email: 'user@example.com',
+    password: 'SecurePass123!',
+    name: 'John Doe'
+  })
+});
+
+// Login
+const response = await fetch('/api/auth/login', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    email: 'user@example.com',
+    password: 'SecurePass123!'
+  })
+});
+
+const { access_token } = await response.json();
+
+// Use token for authenticated requests
+const data = await fetch('/api/user', {
+  headers: { 'Authorization': `Bearer ${access_token}` }
+});
+```
+
+---
+
+## 🧪 Testing
+
+### Test Authentication
+
+```bash
+# Register a new user
+curl -X POST http://localhost:3080/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@example.com","password":"Test1234!","name":"Test User"}'
+
+# Login
+curl -X POST http://localhost:3080/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@example.com","password":"Test1234!"}'
+```
+
+### Test Protected Routes
+
+```bash
+# Get user profile (requires authentication)
+curl http://localhost:3080/api/user \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+---
+
+## 🛠️ Tech Stack
+
+### Backend
+- **Runtime**: Node.js 20+
+- **Framework**: Express.js
+- **Database**: Supabase PostgreSQL
+- **Authentication**: Supabase Auth + JWT
+- **Real-time**: WebSocket
+
+### Frontend
+- **Framework**: React 18
+- **Language**: TypeScript
+- **Build Tool**: Vite
+- **State Management**: React Hooks
+- **API Client**: Supabase JS Client
+
+### DevOps
+- **Database Migrations**: SQL files in `supabase/migrations/`
+- **CLI**: Supabase CLI for local development
+- **Hosting**: Compatible with Vercel, Netlify, or any Node.js host
+
+---
+
+## 🔧 Configuration
+
+### Environment Variables
+
+#### Backend (`.env`)
+
+```bash
+# Database Mode
+DB_MODE=supabase
+
+# Supabase Configuration
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_SERVICE_KEY=your-service-role-key
+
+# Server Configuration
+PORT=3080
+HOST=localhost
+
+# Optional: Legacy MongoDB (if using hybrid mode)
+# MONGO_URI=mongodb://localhost:27017/LibreChat
+```
+
+#### Frontend (`client/.env.local`)
+
+```bash
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your-anon-key
+```
 
 ---
 
 ## 🐛 Troubleshooting
 
-### "Cannot find module '@supabase/supabase-js'"
+### "Cannot connect to Supabase"
 
-```bash
-npm install @supabase/supabase-js
-```
+1. Verify your SQL migrations have been executed
+2. Check that `SUPABASE_URL` and `SUPABASE_SERVICE_KEY` are correct in `.env`
+3. Ensure your Supabase project is active
 
-### "relation does not exist"
+### "Unauthorized" errors
 
-Exécutez les migrations SQL:
-https://app.supabase.com/project/lcsidczjexcfxajuoaiw/sql/new
+1. Check that the JWT token is being sent in the `Authorization` header
+2. Verify token hasn't expired (default: 1 hour)
+3. Use `/api/auth/refresh` to get a new token
 
-### "❌ Supabase connection failed"
+### "Table does not exist"
 
-1. Vérifier migrations SQL exécutées
-2. Vérifier `.env` contient `DB_MODE=supabase`
-3. Vérifier credentials Supabase
+Run the SQL migrations in your Supabase dashboard:
+- `supabase/migrations/001_initial_schema.sql`
+- `supabase/migrations/002_rls_policies.sql`
 
-**Plus de solutions:** [MIGRATION_COMPLETE.md#troubleshooting](./MIGRATION_COMPLETE.md#-troubleshooting)
+### Need more help?
 
----
-
-## 📦 Stack Technique
-
-### Backend
-
-- Node.js + Express
-- Supabase PostgreSQL
-- Supabase Auth (+ OAuth)
-- JWT tokens
-
-### Frontend
-
-- React 18 + TypeScript
-- Vite
-- Supabase Client
-- Realtime subscriptions
-
-### Base de Données
-
-- PostgreSQL (Supabase)
-- Row Level Security
-- Triggers & Functions
-- Indexes optimisés
+- Check [RAPPORT_MIGRATION_COMPLETE.md](RAPPORT_MIGRATION_COMPLETE.md) for detailed technical information
+- Open an issue on GitHub
+- Consult [Supabase documentation](https://supabase.com/docs)
 
 ---
 
-## 🤝 Contribution
+## 🤝 Contributing
 
-Ce projet est un fork de LibreChat, migré vers Supabase pour :
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-- Plus de simplicité (auth géré)
-- Meilleur scaling (PostgreSQL)
-- Dashboard admin inclus
-- Realtime natif
+### Development Workflow
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ---
 
 ## 📄 License
 
-[Voir LICENSE original]
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 🙏 Credits
+## 🙏 Acknowledgments
 
-- **Projet original:** LibreChat
-- **Migration Supabase:** Claude (Anthropic)
-- **Database:** Supabase PostgreSQL
-- **Auth:** Supabase Auth
-
----
-
-## 🎯 Prochaines Étapes
-
-1. ⚠️ **Exécuter migrations SQL** (15 min) - **CRITIQUE**
-2. Démarrer l'app (`npm run server`)
-3. Tester auth (signup/login)
-4. Configurer OAuth (optionnel)
-5. Migrer données MongoDB (optionnel)
+- **Original Project**: [LibreChat](https://github.com/danny-avila/LibreChat) - Foundation for this platform
+- **Database & Auth**: [Supabase](https://supabase.com) - PostgreSQL and authentication services
+- **Migration**: Migrated from MongoDB to Supabase PostgreSQL with enhanced features
 
 ---
 
-**📚 Documentation complète:** [START_HERE.md](./START_HERE.md)
+## 📊 Project Status
 
-**🔗 Dashboard Supabase:** https://app.supabase.com/project/lcsidczjexcfxajuoaiw/sql/new
+- ✅ **Database**: 9 tables with RLS policies deployed
+- ✅ **Authentication**: Email + OAuth fully functional
+- ✅ **API**: 24 protected routes operational
+- ✅ **Frontend**: React client with TypeScript
+- 🔄 **Features**: Core comparison & scoring features in development
 
-**🚀 Let's go!**
+---
+
+## 🔗 Links
+
+- **Repository**: [GitHub](https://github.com/YOUR_USERNAME/Libre-X)
+- **Issues**: [Report a Bug](https://github.com/YOUR_USERNAME/Libre-X/issues)
+- **Documentation**: [Full Docs](RAPPORT_MIGRATION_COMPLETE.md)
+
+---
+
+**Built with ❤️ using Supabase, React, and Node.js**
