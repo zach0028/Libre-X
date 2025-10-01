@@ -13,7 +13,7 @@ const { checkAdmin, requireJwtAuth } = require('~/server/middleware');
 const { updateRoleByName, getRoleByName } = require('~/models/Role');
 
 const router = express.Router();
-router.use(requireJwtAuth);
+router.use(requireAuth); // Works with both Supabase and Passport
 
 /**
  * Permission configuration mapping

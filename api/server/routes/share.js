@@ -9,7 +9,7 @@ const {
   getSharedLinks,
   getSharedLink,
 } = require('~/models');
-const requireJwtAuth = require('~/server/middleware/requireJwtAuth');
+const requireAuth = require('~/server/middleware/authMiddleware'); // Universal auth
 const router = express.Router();
 
 /**
@@ -24,7 +24,7 @@ if (allowSharedLinks) {
     isEnabled(process.env.ALLOW_SHARED_LINKS_PUBLIC);
   router.get(
     '/:shareId',
-    allowSharedLinksPublic ? (req, res, next) => next() : requireJwtAuth,
+    allowSharedLinksPublic ? (req, res, next) => next() : requireAuth,
     async (req, res) => {
       try {
         const share = await getSharedMessages(req.params.shareId);
@@ -45,7 +45,7 @@ if (allowSharedLinks) {
 /**
  * Shared links
  */
-router.get('/', requireJwtAuth, async (req, res) => {
+router.get('/', requireAuth, async (req, res) => {
   try {
     const params = {
       pageParam: req.query.cursor,
@@ -82,7 +82,7 @@ router.get('/', requireJwtAuth, async (req, res) => {
   }
 });
 
-router.get('/link/:conversationId', requireJwtAuth, async (req, res) => {
+router.get('/link/:conversationId', requireAuth, async (req, res) => {
   try {
     const share = await getSharedLink(req.user.id, req.params.conversationId);
 
@@ -97,7 +97,7 @@ router.get('/link/:conversationId', requireJwtAuth, async (req, res) => {
   }
 });
 
-router.post('/:conversationId', requireJwtAuth, async (req, res) => {
+router.post('/:conversationId', requireAuth, async (req, res) => {
   try {
     const created = await createSharedLink(req.user.id, req.params.conversationId);
     if (created) {
@@ -111,7 +111,7 @@ router.post('/:conversationId', requireJwtAuth, async (req, res) => {
   }
 });
 
-router.patch('/:shareId', requireJwtAuth, async (req, res) => {
+router.patch('/:shareId', requireAuth, async (req, res) => {
   try {
     const updatedShare = await updateSharedLink(req.user.id, req.params.shareId);
     if (updatedShare) {
@@ -125,7 +125,7 @@ router.patch('/:shareId', requireJwtAuth, async (req, res) => {
   }
 });
 
-router.delete('/:shareId', requireJwtAuth, async (req, res) => {
+router.delete('/:shareId', requireAuth, async (req, res) => {
   try {
     const result = await deleteSharedLink(req.user.id, req.params.shareId);
 

@@ -10,14 +10,14 @@ const {
   deleteMessages,
 } = require('~/models');
 const { findAllArtifacts, replaceArtifactContent } = require('~/server/services/Artifacts/update');
-const { requireJwtAuth, validateMessageReq } = require('~/server/middleware');
+const { requireAuth, validateMessageReq } = require('~/server/middleware');
 const { cleanUpPrimaryKeyValue } = require('~/lib/utils/misc');
 const { getConvosQueried } = require('~/models/Conversation');
 const { countTokens } = require('~/server/utils');
 const { Message } = require('~/db/models');
 
 const router = express.Router();
-router.use(requireJwtAuth);
+router.use(requireAuth); // Works with both Supabase and Passport
 
 router.get('/', async (req, res) => {
   try {

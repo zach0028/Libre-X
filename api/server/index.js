@@ -38,12 +38,29 @@ const startServer = async () => {
   if (typeof Bun !== 'undefined') {
     axios.defaults.headers.common['Accept-Encoding'] = 'gzip';
   }
-  await connectDb();
 
-  logger.info('Connected to MongoDB');
-  indexSync().catch((err) => {
-    logger.error('[indexSync] Background sync failed:', err);
-  });
+  // Database connection
+  const useSupabase = process.env.DB_MODE === 'supabase';
+
+  if (useSupabase) {
+    // Supabase connection test
+    const { supabaseAdmin } = require('~/db/supabase');
+    try {
+      const { data, error } = await supabaseAdmin.from('profiles').select('count').limit(1);
+      if (error) throw error;
+      logger.info('✅ Connected to Supabase PostgreSQL');
+    } catch (err) {
+      logger.error('❌ Supabase connection failed:', err.message);
+      logger.warn('⚠️ Make sure you have executed SQL migrations in Supabase Dashboard!');
+      logger.warn('📚 See: supabase/README.md for instructions');
+    }
+  } else {
+    await connectDb();
+    logger.info('Connected to MongoDB');
+    indexSync().catch((err) => {
+      logger.error('[indexSync] Background sync failed:', err);
+    });
+  }
 
   app.disable('x-powered-by');
   app.set('trust proxy', trusted_proxy);
@@ -92,23 +109,34 @@ const startServer = async () => {
     console.warn('Social logins are disabled. Set ALLOW_SOCIAL_LOGIN=true to enable them.');
   }
 
-  /* OAUTH */
-  app.use(passport.initialize());
-  passport.use(jwtLogin());
-  passport.use(passportLogin());
+  /* AUTHENTICATION */
+  const useSupabaseAuth = process.env.DB_MODE === 'supabase';
 
-  /* LDAP Auth */
-  if (process.env.LDAP_URL && process.env.LDAP_USER_SEARCH_BASE) {
-    passport.use(ldapLogin);
+  if (useSupabaseAuth) {
+    // Supabase authentication (simplified, no Passport needed)
+    logger.info('🚀 Using Supabase Authentication');
+    const supabaseAuthRoutes = require('./routes/supabaseAuth');
+    app.use('/api/auth', supabaseAuthRoutes);
+  } else {
+    // Legacy Passport authentication
+    logger.info('Using Passport.js Authentication (Legacy)');
+    app.use(passport.initialize());
+    passport.use(jwtLogin());
+    passport.use(passportLogin());
+
+    /* LDAP Auth */
+    if (process.env.LDAP_URL && process.env.LDAP_USER_SEARCH_BASE) {
+      passport.use(ldapLogin);
+    }
+
+    if (isEnabled(ALLOW_SOCIAL_LOGIN)) {
+      await configureSocialLogins(app);
+    }
+
+    app.use('/oauth', routes.oauth);
+    /* API Endpoints */
+    app.use('/api/auth', routes.auth);
   }
-
-  if (isEnabled(ALLOW_SOCIAL_LOGIN)) {
-    await configureSocialLogins(app);
-  }
-
-  app.use('/oauth', routes.oauth);
-  /* API Endpoints */
-  app.use('/api/auth', routes.auth);
   app.use('/api/actions', routes.actions);
   app.use('/api/keys', routes.keys);
   app.use('/api/user', routes.user);

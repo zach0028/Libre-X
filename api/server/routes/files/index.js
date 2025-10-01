@@ -2,7 +2,7 @@ const express = require('express');
 const {
   createFileLimiters,
   configMiddleware,
-  requireJwtAuth,
+  requireAuth,
   uaParser,
   checkBan,
 } = require('~/server/middleware');
@@ -17,7 +17,7 @@ const speech = require('./speech');
 
 const initialize = async () => {
   const router = express.Router();
-  router.use(requireJwtAuth);
+  router.use(requireAuth); // Works with both Supabase and Passport
   router.use(configMiddleware);
   router.use(checkBan);
   router.use(uaParser);

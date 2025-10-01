@@ -24,7 +24,7 @@ const router = Router();
  * Get all MCP tools available to the user
  * Returns only MCP tools, completely decoupled from regular LibreChat tools
  */
-router.get('/tools', requireJwtAuth, async (req, res) => {
+router.get('/tools', requireAuth, async (req, res) => {
   return getMCPTools(req, res);
 });
 
@@ -32,7 +32,7 @@ router.get('/tools', requireJwtAuth, async (req, res) => {
  * Initiate OAuth flow
  * This endpoint is called when the user clicks the auth link in the UI
  */
-router.get('/:serverName/oauth/initiate', requireJwtAuth, async (req, res) => {
+router.get('/:serverName/oauth/initiate', requireAuth, async (req, res) => {
   try {
     const { serverName } = req.params;
     const { userId, flowId } = req.query;
@@ -232,7 +232,7 @@ router.get('/:serverName/oauth/callback', async (req, res) => {
  * Get OAuth tokens for a completed flow
  * This is primarily for user-level OAuth flows
  */
-router.get('/oauth/tokens/:flowId', requireJwtAuth, async (req, res) => {
+router.get('/oauth/tokens/:flowId', requireAuth, async (req, res) => {
   try {
     const { flowId } = req.params;
     const user = req.user;
@@ -295,7 +295,7 @@ router.get('/oauth/status/:flowId', async (req, res) => {
  * Cancel OAuth flow
  * This endpoint cancels a pending OAuth flow
  */
-router.post('/oauth/cancel/:serverName', requireJwtAuth, async (req, res) => {
+router.post('/oauth/cancel/:serverName', requireAuth, async (req, res) => {
   try {
     const { serverName } = req.params;
     const user = req.user;
@@ -337,7 +337,7 @@ router.post('/oauth/cancel/:serverName', requireJwtAuth, async (req, res) => {
  * Reinitialize MCP server
  * This endpoint allows reinitializing a specific MCP server
  */
-router.post('/:serverName/reinitialize', requireJwtAuth, async (req, res) => {
+router.post('/:serverName/reinitialize', requireAuth, async (req, res) => {
   try {
     const { serverName } = req.params;
     const user = createSafeUser(req.user);
@@ -400,7 +400,7 @@ router.post('/:serverName/reinitialize', requireJwtAuth, async (req, res) => {
  * Get connection status for all MCP servers
  * This endpoint returns all app level and user-scoped connection statuses from MCPManager without disconnecting idle connections
  */
-router.get('/connection/status', requireJwtAuth, async (req, res) => {
+router.get('/connection/status', requireAuth, async (req, res) => {
   try {
     const user = req.user;
 
@@ -440,7 +440,7 @@ router.get('/connection/status', requireJwtAuth, async (req, res) => {
  * Get connection status for a single MCP server
  * This endpoint returns the connection status for a specific server for a given user
  */
-router.get('/connection/status/:serverName', requireJwtAuth, async (req, res) => {
+router.get('/connection/status/:serverName', requireAuth, async (req, res) => {
   try {
     const user = req.user;
     const { serverName } = req.params;
@@ -489,7 +489,7 @@ router.get('/connection/status/:serverName', requireJwtAuth, async (req, res) =>
  * Check which authentication values exist for a specific MCP server
  * This endpoint returns only boolean flags indicating if values are set, not the actual values
  */
-router.get('/:serverName/auth-values', requireJwtAuth, async (req, res) => {
+router.get('/:serverName/auth-values', requireAuth, async (req, res) => {
   try {
     const { serverName } = req.params;
     const user = req.user;

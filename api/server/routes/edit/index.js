@@ -8,7 +8,7 @@ const { EModelEndpoint } = require('librechat-data-provider');
 const {
   checkBan,
   uaParser,
-  requireJwtAuth,
+  requireAuth,
   messageIpLimiter,
   concurrentLimiter,
   messageUserLimiter,
@@ -19,7 +19,7 @@ const { LIMIT_CONCURRENT_MESSAGES, LIMIT_MESSAGE_IP, LIMIT_MESSAGE_USER } = proc
 
 const router = express.Router();
 
-router.use(requireJwtAuth);
+router.use(requireAuth); // Works with both Supabase and Passport
 router.use(checkBan);
 router.use(uaParser);
 

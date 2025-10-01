@@ -1,7 +1,7 @@
 const express = require('express');
 const { generateCheckAccess } = require('@librechat/api');
 const { PermissionTypes, Permissions, PermissionBits } = require('librechat-data-provider');
-const { requireJwtAuth, configMiddleware, canAccessAgentResource } = require('~/server/middleware');
+const { requireAuth, configMiddleware, canAccessAgentResource } = require('~/server/middleware');
 const v1 = require('~/server/controllers/agents/v1');
 const { getRoleByName } = require('~/models/Role');
 const actions = require('./actions');
@@ -30,7 +30,7 @@ const checkGlobalAgentShare = generateCheckAccess({
   getRoleByName,
 });
 
-router.use(requireJwtAuth);
+router.use(requireAuth); // Works with both Supabase and Passport
 
 /**
  * Agent actions route.

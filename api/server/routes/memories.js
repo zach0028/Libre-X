@@ -8,7 +8,7 @@ const {
   deleteMemory,
   setMemory,
 } = require('~/models');
-const { requireJwtAuth, configMiddleware } = require('~/server/middleware');
+const { requireAuth, configMiddleware } = require('~/server/middleware');
 const { getRoleByName } = require('~/models/Role');
 
 const router = express.Router();
@@ -41,7 +41,7 @@ const checkMemoryOptOut = generateCheckAccess({
   getRoleByName,
 });
 
-router.use(requireJwtAuth);
+router.use(requireAuth); // Works with both Supabase and Passport
 
 /**
  * GET /memories

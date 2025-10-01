@@ -1,11 +1,11 @@
 const express = require('express');
 const { MeiliSearch } = require('meilisearch');
-const requireJwtAuth = require('~/server/middleware/requireJwtAuth');
+const requireAuth = require('~/server/middleware/authMiddleware'); // Universal auth
 const { isEnabled } = require('~/server/utils');
 
 const router = express.Router();
 
-router.use(requireJwtAuth);
+router.use(requireAuth); // Works with both Supabase and Passport
 
 router.get('/enable', async function (req, res) {
   if (!isEnabled(process.env.SEARCH)) {

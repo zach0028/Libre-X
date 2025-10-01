@@ -20,7 +20,7 @@ const checkBookmarkAccess = generateCheckAccess({
   getRoleByName,
 });
 
-router.use(requireJwtAuth);
+router.use(requireAuth); // Works with both Supabase and Passport
 router.use(checkBookmarkAccess);
 
 /**

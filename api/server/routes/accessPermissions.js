@@ -7,13 +7,13 @@ const {
   getResourceRoles,
   searchPrincipals,
 } = require('~/server/controllers/PermissionsController');
-const { requireJwtAuth, checkBan, uaParser, canAccessResource } = require('~/server/middleware');
+const { requireAuth, checkBan, uaParser, canAccessResource } = require('~/server/middleware');
 const { checkPeoplePickerAccess } = require('~/server/middleware/checkPeoplePickerAccess');
 
 const router = express.Router();
 
 // Apply common middleware
-router.use(requireJwtAuth);
+router.use(requireAuth); // Works with both Supabase and Passport
 router.use(checkBan);
 router.use(uaParser);
 

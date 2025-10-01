@@ -32,7 +32,7 @@ const {
 const {
   canAccessPromptGroupResource,
   canAccessPromptViaGroup,
-  requireJwtAuth,
+  requireAuth,
 } = require('~/server/middleware');
 const {
   findPubliclyAccessibleResources,
@@ -64,7 +64,7 @@ const checkGlobalPromptShare = generateCheckAccess({
   getRoleByName,
 });
 
-router.use(requireJwtAuth);
+router.use(requireAuth); // Works with both Supabase and Passport
 router.use(checkPromptAccess);
 
 /**

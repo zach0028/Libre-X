@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const requireJwtAuth = require('~/server/middleware/requireJwtAuth');
+const requireAuth = require('~/server/middleware/authMiddleware'); // Universal auth
 const { countTokens } = require('~/server/utils');
 const { logger } = require('~/config');
 
-router.post('/', requireJwtAuth, async (req, res) => {
+router.post('/', requireAuth, async (req, res) => {
   try {
     const { arg } = req.body;
     const count = await countTokens(arg?.text ?? arg);

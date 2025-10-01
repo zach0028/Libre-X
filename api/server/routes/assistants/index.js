@@ -1,5 +1,5 @@
 const express = require('express');
-const { uaParser, checkBan, requireJwtAuth, configMiddleware } = require('~/server/middleware');
+const { uaParser, checkBan, requireAuth, configMiddleware } = require('~/server/middleware');
 const router = express.Router();
 
 const { v1 } = require('./v1');
@@ -7,7 +7,7 @@ const chatV1 = require('./chatV1');
 const v2 = require('./v2');
 const chatV2 = require('./chatV2');
 
-router.use(requireJwtAuth);
+router.use(requireAuth); // Works with both Supabase and Passport
 router.use(checkBan);
 router.use(uaParser);
 router.use(configMiddleware);
