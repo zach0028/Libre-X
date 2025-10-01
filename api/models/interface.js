@@ -8,6 +8,14 @@ const { getRoleByName, updateAccessPermissions } = require('./Role');
  * @param {AppConfig} appConfig
  */
 async function updateInterfacePermissions(appConfig) {
+  const DB_MODE = process.env.DB_MODE || 'mongodb';
+
+  // Skip MongoDB-based permission updates in Supabase mode
+  if (DB_MODE === 'supabase') {
+    logger.info('🔵 [Supabase Mode] Skipping MongoDB interface permissions update');
+    return;
+  }
+
   try {
     await updateInterfacePerms({
       appConfig,

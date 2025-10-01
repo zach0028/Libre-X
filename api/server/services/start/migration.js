@@ -15,6 +15,14 @@ const { findRoleByIdentifier } = require('~/models');
  * This runs at the end to ensure all systems are initialized
  */
 async function checkMigrations() {
+  const DB_MODE = process.env.DB_MODE || 'mongodb';
+
+  // Skip MongoDB migrations in Supabase mode
+  if (DB_MODE === 'supabase') {
+    logger.info('🔵 [Supabase Mode] Skipping MongoDB permission migrations');
+    return;
+  }
+
   try {
     const agentMigrationResult = await checkAgentPermissionsMigration({
       mongoose,
