@@ -6,6 +6,14 @@ const { createMCPManager } = require('~/config');
  * Initialize MCP servers
  */
 async function initializeMCPs() {
+  const DB_MODE = process.env.DB_MODE || 'mongodb';
+
+  // Skip MCP initialization in Supabase mode (requires MongoDB Project collection)
+  if (DB_MODE === 'supabase') {
+    logger.info('🔵 [Supabase Mode] Skipping MCP server initialization');
+    return;
+  }
+
   const appConfig = await getAppConfig();
   const mcpServers = appConfig.mcpConfig;
   if (!mcpServers) {
