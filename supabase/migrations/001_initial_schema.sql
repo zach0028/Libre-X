@@ -3,8 +3,8 @@
 -- Initial Schema Creation
 -- =====================================================
 
--- Enable UUID extension
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+-- Enable pgcrypto extension for gen_random_uuid()
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 -- =====================================================
 -- PROFILES TABLE (extends auth.users)
@@ -63,7 +63,7 @@ CREATE INDEX idx_profiles_username ON public.profiles(username);
 -- COMPARISON SESSIONS TABLE (replaces conversations)
 -- =====================================================
 CREATE TABLE public.comparison_sessions (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
 
   -- Session title
@@ -105,7 +105,7 @@ CREATE INDEX idx_comparison_public ON public.comparison_sessions((metadata->>'is
 -- SCORING TEMPLATES TABLE
 -- =====================================================
 CREATE TABLE public.scoring_templates (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
 
   name TEXT NOT NULL,
@@ -135,7 +135,7 @@ CREATE INDEX idx_scoring_templates_category ON public.scoring_templates(category
 -- MODEL BENCHMARKS TABLE (for analytics/leaderboard)
 -- =====================================================
 CREATE TABLE public.model_benchmarks (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 
   model TEXT NOT NULL,
   category TEXT DEFAULT 'all',
@@ -169,7 +169,7 @@ CREATE INDEX idx_benchmarks_category ON public.model_benchmarks(category);
 -- FILES TABLE
 -- =====================================================
 CREATE TABLE public.files (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
 
   -- File metadata
@@ -198,7 +198,7 @@ CREATE INDEX idx_files_created ON public.files(created_at DESC);
 -- TRANSACTIONS TABLE (for credits/billing)
 -- =====================================================
 CREATE TABLE public.transactions (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
 
   -- Transaction details
@@ -226,7 +226,7 @@ CREATE INDEX idx_transactions_type ON public.transactions(type);
 -- ROLES & GROUPS TABLES (for RBAC)
 -- =====================================================
 CREATE TABLE public.roles (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT UNIQUE NOT NULL,
   description TEXT,
   permissions JSONB DEFAULT '[]'::jsonb,
@@ -234,7 +234,7 @@ CREATE TABLE public.roles (
 );
 
 CREATE TABLE public.groups (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
   description TEXT,
   owner_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
