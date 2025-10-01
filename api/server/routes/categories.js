@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { requireJwtAuth } = require('~/server/middleware');
+const { requireAuth } = require('~/server/middleware'); // Universal auth (Supabase or Passport)
 const { getCategories } = require('~/models/Categories');
 
 router.get('/', requireAuth, async (req, res) => {

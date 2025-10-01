@@ -4,8 +4,10 @@ const { logger } = require('@librechat/data-schemas');
 
 const mongoose = require('mongoose');
 const MONGO_URI = process.env.MONGO_URI;
+const DB_MODE = process.env.DB_MODE || 'mongodb';
 
-if (!MONGO_URI) {
+// Only require MONGO_URI if not using Supabase
+if (!MONGO_URI && DB_MODE !== 'supabase') {
   throw new Error('Please define the MONGO_URI environment variable');
 }
 /** The maximum number of connections in the connection pool. */

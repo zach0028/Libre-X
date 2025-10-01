@@ -1,6 +1,6 @@
 const express = require('express');
 const { getAvailablePluginsController } = require('~/server/controllers/PluginController');
-const { requireJwtAuth } = require('~/server/middleware');
+const { requireAuth } = require('~/server/middleware');
 
 const router = express.Router();
 

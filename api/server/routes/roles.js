@@ -9,7 +9,7 @@ const {
   marketplacePermissionsSchema,
   peoplePickerPermissionsSchema,
 } = require('librechat-data-provider');
-const { checkAdmin, requireJwtAuth } = require('~/server/middleware');
+const { checkAdmin, requireAuth } = require('~/server/middleware');
 const { updateRoleByName, getRoleByName } = require('~/models/Role');
 
 const router = express.Router();

@@ -12,6 +12,7 @@ const requireLdapAuth = require('./requireLdapAuth');
 const abortMiddleware = require('./abortMiddleware');
 const checkInviteUser = require('./checkInviteUser');
 const requireJwtAuth = require('./requireJwtAuth');
+const requireAuth = require('./authMiddleware'); // Universal auth (Supabase or Passport)
 const configMiddleware = require('./config/app');
 const validateModel = require('./validateModel');
 const moderateText = require('./moderateText');
@@ -37,6 +38,7 @@ module.exports = {
   logHeaders,
   moderateText,
   validateModel,
+  requireAuth, // Universal auth (Supabase or Passport)
   requireJwtAuth,
   checkInviteUser,
   requireLdapAuth,

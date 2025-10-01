@@ -30,7 +30,7 @@ const router = express.Router();
 
 const ldapAuth = !!process.env.LDAP_URL && !!process.env.LDAP_USER_SEARCH_BASE;
 //Local
-router.post('/logout', middleware.requireJwtAuth, logoutController);
+router.post('/logout', middleware.requireAuth, logoutController);
 router.post(
   '/login',
   middleware.logHeaders,
@@ -63,13 +63,13 @@ router.post(
   resetPasswordController,
 );
 
-router.get('/2fa/enable', middleware.requireJwtAuth, enable2FA);
-router.post('/2fa/verify', middleware.requireJwtAuth, verify2FA);
+router.get('/2fa/enable', middleware.requireAuth, enable2FA);
+router.post('/2fa/verify', middleware.requireAuth, verify2FA);
 router.post('/2fa/verify-temp', middleware.checkBan, verify2FAWithTempToken);
-router.post('/2fa/confirm', middleware.requireJwtAuth, confirm2FA);
-router.post('/2fa/disable', middleware.requireJwtAuth, disable2FA);
-router.post('/2fa/backup/regenerate', middleware.requireJwtAuth, regenerateBackupCodes);
+router.post('/2fa/confirm', middleware.requireAuth, confirm2FA);
+router.post('/2fa/disable', middleware.requireAuth, disable2FA);
+router.post('/2fa/backup/regenerate', middleware.requireAuth, regenerateBackupCodes);
 
-router.get('/graph-token', middleware.requireJwtAuth, graphTokenController);
+router.get('/graph-token', middleware.requireAuth, graphTokenController);
 
 module.exports = router;

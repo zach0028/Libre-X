@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { updateUserKey, deleteUserKey, getUserKeyExpiry } = require('../services/UserService');
-const { requireJwtAuth } = require('../middleware/');
+const { requireAuth } = require('../middleware/');
 
 router.put('/', requireAuth, async (req, res) => {
   await updateUserKey({ userId: req.user.id, ...req.body });

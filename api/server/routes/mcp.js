@@ -14,7 +14,7 @@ const { getUserPluginAuthValue } = require('~/server/services/PluginService');
 const { updateMCPServerTools } = require('~/server/services/Config/mcp');
 const { reinitMCPServer } = require('~/server/services/Tools/mcp');
 const { getMCPTools } = require('~/server/controllers/mcp');
-const { requireJwtAuth } = require('~/server/middleware');
+const { requireAuth } = require('~/server/middleware');
 const { findPluginAuthsByKeys } = require('~/models');
 const { getLogStores } = require('~/cache');
 
