@@ -1,10 +1,10 @@
 const express = require('express');
 
 const { getBanner } = require('~/models/Banner');
-const optionalJwtAuth = require('~/server/middleware/optionalJwtAuth');
+const { optionalAuth } = require('~/server/middleware/authMiddleware');
 const router = express.Router();
 
-router.get('/', optionalJwtAuth, async (req, res) => {
+router.get('/', optionalAuth, async (req, res) => {
   try {
     res.status(200).send(await getBanner(req.user));
   } catch (error) {

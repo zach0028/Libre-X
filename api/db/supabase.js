@@ -42,9 +42,10 @@ const supabaseAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
  */
 async function testSupabaseConnection() {
   try {
+    // Test connection with a simple query
     const { data, error } = await supabaseAdmin
       .from('profiles')
-      .select('count')
+      .select('id')
       .limit(1);
 
     if (error) {
@@ -195,6 +196,7 @@ async function connectSupabase() {
 
 module.exports = {
   supabase: supabaseAdmin,
+  supabaseAdmin, // Export with both names for compatibility
   connectSupabase,
   testSupabaseConnection,
   handleSupabaseError,

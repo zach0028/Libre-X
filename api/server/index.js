@@ -46,7 +46,7 @@ const startServer = async () => {
     // Supabase connection test
     const { supabaseAdmin } = require('~/db/supabase');
     try {
-      const { data, error } = await supabaseAdmin.from('profiles').select('count').limit(1);
+      const { data, error } = await supabaseAdmin.from('profiles').select('id').limit(1);
       if (error) throw error;
       logger.info('✅ Connected to Supabase PostgreSQL');
     } catch (err) {

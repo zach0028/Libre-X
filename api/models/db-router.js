@@ -26,7 +26,9 @@ const supabaseModels = USE_SUPABASE
   ? {
       user: require('./supabase/userModel'),
       comparisonSession: require('./supabase/comparisonSessionModel'),
-      // Add other Supabase models as created
+      file: require('./supabase/fileModel'),
+      transaction: require('./supabase/transactionModel'),
+      scoringTemplate: require('./supabase/scoringTemplateModel'),
     }
   : {};
 
@@ -160,83 +162,62 @@ const recordMessage = USE_SUPABASE
  * File Methods
  */
 const findFileById = USE_SUPABASE
-  ? async (fileId) => {
-      console.warn('[db-router] findFileById not yet implemented for Supabase');
-      return null;
-    }
+  ? supabaseModels.file.findFileById
   : mongoModels.File.findFileById;
 
 const createFile = USE_SUPABASE
-  ? async (fileData) => {
-      console.warn('[db-router] createFile not yet implemented for Supabase');
-      return null;
-    }
+  ? supabaseModels.file.createFile
   : mongoModels.File.createFile;
 
 const getFiles = USE_SUPABASE
-  ? async (filter) => {
-      console.warn('[db-router] getFiles not yet implemented for Supabase');
-      return [];
-    }
+  ? supabaseModels.file.getFiles
   : mongoModels.File.getFiles;
 
 const deleteFile = USE_SUPABASE
-  ? async (fileId) => {
-      console.warn('[db-router] deleteFile not yet implemented for Supabase');
-      return null;
-    }
+  ? supabaseModels.file.deleteFile
   : mongoModels.File.deleteFile;
 
 const deleteFiles = USE_SUPABASE
-  ? async (filter) => {
-      console.warn('[db-router] deleteFiles not yet implemented for Supabase');
-      return { deletedCount: 0 };
-    }
+  ? supabaseModels.file.deleteFiles
   : mongoModels.File.deleteFiles;
 
 const updateFile = USE_SUPABASE
-  ? async (fileId, update) => {
-      console.warn('[db-router] updateFile not yet implemented for Supabase');
-      return null;
-    }
+  ? supabaseModels.file.updateFile
   : mongoModels.File.updateFile;
 
 const updateFileUsage = USE_SUPABASE
-  ? async (fileId) => {
-      console.warn('[db-router] updateFileUsage not yet implemented for Supabase');
-      return null;
-    }
+  ? supabaseModels.file.updateFileUsage
   : mongoModels.File.updateFileUsage;
 
+const getToolFilesByIds = USE_SUPABASE
+  ? supabaseModels.file.getToolFilesByIds
+  : mongoModels.File.getToolFilesByIds;
+
+const batchUpdateFiles = USE_SUPABASE
+  ? supabaseModels.file.batchUpdateFiles
+  : mongoModels.File.batchUpdateFiles;
+
+const deleteFileByFilter = USE_SUPABASE
+  ? supabaseModels.file.deleteFileByFilter
+  : mongoModels.File.deleteFileByFilter;
+
 /**
- * Preset Methods
+ * Preset Methods (now ScoringTemplate in Supabase)
  */
 const getPreset = USE_SUPABASE
-  ? async (filter) => {
-      console.warn('[db-router] getPreset not yet implemented for Supabase');
-      return null;
-    }
+  ? supabaseModels.scoringTemplate.getPreset
   : mongoModels.Preset.getPreset;
 
 const getPresets = USE_SUPABASE
-  ? async (filter) => {
-      console.warn('[db-router] getPresets not yet implemented for Supabase');
-      return [];
-    }
+  ? supabaseModels.scoringTemplate.getPresets
   : mongoModels.Preset.getPresets;
 
 const savePreset = USE_SUPABASE
-  ? async (presetData) => {
-      console.warn('[db-router] savePreset not yet implemented for Supabase');
-      return null;
-    }
+  ? supabaseModels.scoringTemplate.savePreset
   : mongoModels.Preset.savePreset;
 
 const deletePresets = USE_SUPABASE
-  ? async (filter) => {
-      console.warn('[db-router] deletePresets not yet implemented for Supabase');
-      return { deletedCount: 0 };
-    }
+  ? supabaseModels.scoringTemplate.deletePresets
   : mongoModels.Preset.deletePresets;
 
 // Log which database mode is active
@@ -272,6 +253,9 @@ module.exports = {
   deleteFiles,
   updateFile,
   updateFileUsage,
+  getToolFilesByIds,
+  batchUpdateFiles,
+  deleteFileByFilter,
 
   // Preset methods
   getPreset,
